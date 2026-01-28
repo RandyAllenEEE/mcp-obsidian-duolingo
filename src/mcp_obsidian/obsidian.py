@@ -57,7 +57,7 @@ class Obsidian():
 
         
     def list_files_in_dir(self, dirpath: str) -> Any:
-        url = f"{self.get_base_url()}/vault/{dirpath}/"
+        url = f"{self.get_base_url()}/vault/{urllib.parse.quote(dirpath)}/"
         
         def call_fn():
             response = requests.get(url, headers=self._get_headers(), verify=self.verify_ssl, timeout=self.timeout)
@@ -68,7 +68,7 @@ class Obsidian():
         return self._safe_call(call_fn)
 
     def get_file_contents(self, filepath: str) -> Any:
-        url = f"{self.get_base_url()}/vault/{filepath}"
+        url = f"{self.get_base_url()}/vault/{urllib.parse.quote(filepath)}"
     
         def call_fn():
             response = requests.get(url, headers=self._get_headers(), verify=self.verify_ssl, timeout=self.timeout)
@@ -114,7 +114,7 @@ class Obsidian():
         return self._safe_call(call_fn)
     
     def append_content(self, filepath: str, content: str) -> Any:
-        url = f"{self.get_base_url()}/vault/{filepath}"
+        url = f"{self.get_base_url()}/vault/{urllib.parse.quote(filepath)}"
         
         def call_fn():
             response = requests.post(
@@ -130,7 +130,7 @@ class Obsidian():
         return self._safe_call(call_fn)
     
     def patch_content(self, filepath: str, operation: str, target_type: str, target: str, content: str) -> Any:
-        url = f"{self.get_base_url()}/vault/{filepath}"
+        url = f"{self.get_base_url()}/vault/{urllib.parse.quote(filepath)}"
         
         headers = self._get_headers() | {
             'Content-Type': 'text/markdown',
@@ -147,7 +147,7 @@ class Obsidian():
         return self._safe_call(call_fn)
 
     def put_content(self, filepath: str, content: str) -> Any:
-        url = f"{self.get_base_url()}/vault/{filepath}"
+        url = f"{self.get_base_url()}/vault/{urllib.parse.quote(filepath)}"
         
         def call_fn():
             response = requests.put(
@@ -171,7 +171,7 @@ class Obsidian():
         Returns:
             None on success
         """
-        url = f"{self.get_base_url()}/vault/{filepath}"
+        url = f"{self.get_base_url()}/vault/{urllib.parse.quote(filepath)}"
         
         def call_fn():
             response = requests.delete(url, headers=self._get_headers(), verify=self.verify_ssl, timeout=self.timeout)
